@@ -3,7 +3,7 @@
 Plugin Name: Widget Content Blocks
 Plugin URI: https://dannyvankooten.com/wordpress-plugins/wysiwyg-widgets/
 Description: Adds a WYSIWYG Widget with a rich text editor and media upload functions.
-Version: 2.3.10
+Version: 2.3.11
 Author: Danny van Kooten
 Author URI: http://dvk.co/
 Text Domain: wysiwyg-widgets
@@ -12,7 +12,7 @@ License: GPL v3 or later
 
 WYSIWYG Widgets plugin
 
-Copyright (C) 2013-2024, Danny van Kooten, hi@dannyvankooten.com
+Copyright (C) 2013-2026, Danny van Kooten, hi@dannyvankooten.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,15 +28,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+defined('ABSPATH') or exit;
 
-define( 'WYWI_VERSION_NUMBER', "2.3.10" );
-define( 'WYWI_PLUGIN_DIR', dirname( __FILE__ ) .'/' );
+define( 'WYWI_PLUGIN_DIR', __DIR__ . '/' );
 
-require_once WYWI_PLUGIN_DIR . 'includes/plugin.php';
+require_once __DIR__ . '/includes/plugin.php';
 
 // only load admin class for non-ajax requests to the admin section
-if( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
-	require_once WYWI_PLUGIN_DIR . 'includes/class-admin.php';
+if( is_admin() && ! wp_doing_ajax() ) {
+	require_once __DIR__ . '/includes/class-admin.php';
 	new WYSIWYG_Widgets_Admin();
 }
