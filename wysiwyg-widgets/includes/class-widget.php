@@ -33,9 +33,6 @@ class WYSIWYG_Widgets_Widget extends WP_Widget
         echo $args['before_widget'];
 
         if (! empty($id) && $post) {
-            // Allow filtering of content
-            $content = apply_filters('ww_content', $post->post_content, $id);
-
             echo '<!-- Widget Content Blocks - https://wordpress.org/plugins/wysiwyg-widgets/ -->';
 
             if ($show_title) {
@@ -48,7 +45,11 @@ class WYSIWYG_Widgets_Widget extends WP_Widget
                 echo $args['before_title'] . esc_html($title) . $args['after_title'];
             }
 
-            echo wp_kses_post($content);
+            // Allow filtering of content
+            $content = apply_filters('ww_content', $post->post_content, $id);
+
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is filtered upon saving a post (depending on user capability)
+            echo $content;
         } elseif (current_user_can('manage_options')) { ?>
                 <p>
                     <?php if (empty($id)) {
